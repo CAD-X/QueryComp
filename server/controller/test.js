@@ -72,7 +72,7 @@ const test = {
           ]
         },
         {
-          "name": "Kassandra Meyers",
+          "name": "Kassandra Meyer",
           "cohort": "31",
           "project": [
             {

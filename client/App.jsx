@@ -12,16 +12,19 @@ class App extends Component {
   showOnPage(comp) {
     if(!comp.props) return;
     const children = comp.props.children;
+    let newChildren = [];
     let limit = children.length;
-    for(let i = 0; i < limit; i++) {
-      children.push(React.createElement('h1',null,children[i].props.name));
-      this.showOnPage(children[i]);
-    }
+    newChildren.push(React.createElement('h1',null,comp.props.name));
     for(let x in comp.props) {
       if(x !== 'children') {
-        children.push(React.createElement('h4',null,`${x} = ${comp.props[x]}`));
+        newChildren.push(React.createElement('h4',null,`${x} = ${comp.props[x]}`));
       }
     }
+    for(let i = 0; i < limit; i++) {
+      this.showOnPage(children[i]);
+    }
+    newChildren = newChildren.concat(children);
+    comp.props.children = newChildren;
     return comp;
   }
 
@@ -38,7 +41,6 @@ class App extends Component {
         for(let i = 0; i < comp.length; i++) {
           newComp.push(this.showOnPage(comp[i]));
         }
-        console.log(newComp);
         return this.setState({components: newComp});
       })
       .catch(err => console.log('App.componentDidMount ERROR: ', err));
